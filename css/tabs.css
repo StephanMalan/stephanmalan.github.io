@@ -1,0 +1,45 @@
+.tab-view {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 800px;
+}
+.tab-view input[type="radio"] {
+    display: none;
+}
+.tab-view label {
+    font-weight: bold;
+    padding: 8px;
+    color: rgba(255, 255, 255, 0.661);
+    cursor: pointer;
+    position: relative;
+}
+.tab-view label::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 3px;
+    border-radius: 3px;
+    background: rgb(10, 207, 254);
+    left: 0;
+    right: 0;
+    top: 90%;
+    margin: auto;
+    display: none;
+}
+
+.tab-view .tab {
+    width: 100%;
+    order: 1;
+    display: none;
+}
+
+.tab-view input[type='radio']:checked + label + .tab {
+    display: block;
+}
+
+.tab-view input[type="radio"]:checked + label {
+    color: white;
+}
+.tab-view input[type="radio"]:checked + label::after {
+    display: block;
+}

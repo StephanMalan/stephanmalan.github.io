@@ -1,0 +1,141 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Stephan Malan</title>
+    <meta name="author" content="Stephan Malan">
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/projects.css"></link>
+    <link rel="stylesheet" type="text/css" href="/css/common.css"></link>
+</head>
+
+<body>
+    <div id="base" class="base">
+        <div class="nav-bar">
+            <div>
+                <div class="icon" onclick="location.href='/index.html';">
+                    <svg width="40" height="23" viewBox="0 0 90 71" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="10" width="35" height="52" fill="white"></rect>
+                        <path d="M0 0V70.338H89.521V0H0ZM19.184 53.481L12.79 47.085L19.184 40.691L25.578 34.2971C25.578 34.2971 21.681 30.4 19.184 27.903C16.687 25.406 12.79 21.509 12.79 21.509L15.987 18.3115L19.184 15.114L28.7755 24.7055L38.367 34.2971L28.7755 43.889L19.184 53.481Z" fill="#263238"></path>
+                        <rect class="blinkit" x="45" y="44" width="29" height="8" fill="#ffffff"></rect>
+                    </svg>
+                    Stephan Malan
+                </div>
+                <div class="project-link" onclick='location.href="/index.html#projects"'>
+                    Projects
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-bar"></div>
+
+        <div id="content">
+            <div class="heading">
+                <div class="title">
+                    Project Details Parser
+                </div>
+                <a class="github-link" onclick="open_github()">
+                    <span>View on</span>
+                    <span>
+                        <image class="github-icon" src="/images/github.svg"></image>
+                    </span>
+                    <span>GitHub</span>
+                </a>
+            </div>
+            <div id="editor">
+                <div id="editor-header">
+                    <div id="editor-controls">
+                        <image src="/images/window_buttons.svg"></image>
+                    </div>
+                    <div class="tab active-tab" onclick="selectTab('readme', this)">
+                        <image src="/images/markdown.svg"></image>
+                        README.md
+                    </div>
+                    <div class="tab" onclick="selectTab('cargo', this)">
+                        <image src="/images/cargo.svg"></image>
+                        Cargo.toml
+                    </div>
+                </div>
+                <div id="editor-content">
+                    <div class="page" id="readme"></div>
+                    <div class="page" id="cargo" style="display: none;">
+                        <code>
+                            <lin><sect>[</sect>package<sect>]</sect></lin>
+                            <lin><key>name</key>&nbsp;=&nbsp;<string>"Project TOML Parser"</string></lin>
+                            <lin><key>description</key>&nbsp;=&nbsp;<string>"Project TOML parser is a small command-line utility that retrieves project name and version from TOML files."</string></lin>
+                            <br><br>
+
+                            <lin><sect>[</sect>project.motivation<sect>]</sect></lin>
+                            <lin><key>motivations</key>&nbsp;=&nbsp;[</lin>
+                            <lin>&emsp;&emsp;<string>"I wanted to write a small commandline utility that gets called by my custom Oh-my-zsh theme to list project details"</string>,</lin>
+                            <lin>&emsp;&emsp;<string>"First project in Rust"</string>,</lin>
+                            <lin>&emsp;&emsp;<string>"Use Serde parser in Rust"</string>,</lin>
+                            <lin>]</lin>
+                            <br><br>
+    
+                            <lin><sect>[</sect>project.tech<sect>]</sect></lin>
+                            <lin><key>tech</key>&nbsp;=&nbsp;[<string>"Rust"</string>]</lin>
+                            <br><br>
+    
+                            <lin><sect>[</sect>project.learnings<sect>]</sect></lin>
+                            <lin><key>learnings</key>&nbsp;=&nbsp;[</lin>
+                            <lin>&emsp;&emsp;<string>"Since it was my first projet in Rust, I learned a lot about the language."</string></lin>
+                            <lin>]</lin>
+                            <br><br>
+    
+                            <lin><sect>[</sect>project.planned<sect>]</sect></lin>
+                            <lin><key>todos</key>&nbsp;=&nbsp;[</lin>
+                            <lin>&emsp;&emsp;<string>"Start parsing files other than TOML (like settings.gradle)"</string></lin>
+                            <lin>&emsp;&emsp;<string>"Add more output formats"</string></lin>
+                            <lin>]</lin>
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var projectName = "project_toml_parser"
+        elem = document.getElementById("readme");
+        const fileUrl = `https://raw.githubusercontent.com/StephanMalan/${projectName}/master/README.md`;
+
+        fetch(fileUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network error');
+                }
+                return response.text();
+            })
+            .then(data => {
+                elem.innerHTML = marked.parse(data);
+            })
+            .catch(error => {
+                console.error('There was a problem fetching the file:', error);
+            });
+
+        function open_github() {
+            location.href=`https://github.com/StephanMalan/${projectName}`;
+        }
+
+        function selectTab(pageName, element) {
+            let elements = document.getElementsByClassName("tab");
+            for (const elem of elements) {
+                elem.classList.remove("active-tab")
+            }
+            element.classList.add("active-tab")
+
+            let pages = document.getElementsByClassName("page");
+            for (const page of pages) {
+                page.style.display = "none";
+            }
+            let selectedPage = document.getElementById(pageName);
+            selectedPage.style.display = "block";
+        }
+    </script>
+</body>
+</html>
